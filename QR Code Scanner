@@ -1,0 +1,14 @@
+pip install qrcode
+import qrcode
+import cv2
+from google.colab.patches import cv2_imshow
+img=qrcode.make("Hello Everyone! This is Darshini")
+print(img.size)
+print(type(img))
+img.save('/content/QRgen.png')
+image=cv2.imread('/content/QRgen.png')
+cv2_imshow(image)
+detector=cv2.QRCodeDetector()
+data, bbox, straight_qr=detector.detectAndDecode(image)
+print('Detected data=>',data)
+bbox
