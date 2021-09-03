@@ -1,0 +1,17 @@
+  
+import cv2
+Capture1 = cv2.VideoCapture(0)
+while(True):
+    ret,frame = Capture1.read()
+    cv2.imshow('Camera - Icebreaker',frame)
+    if(cv2.waitKey(1) & 0xFF == ord('q')):
+        Capture1.release()
+        cv2.destroyAllWindows()
+Capture2 = cv2.VideoCapture(0)
+result = True
+while(result):
+    ret,frame = Capture2.read()
+    cv2.imwrite("NewPicture.jpg",frame)
+    result = False
+Capture2.release()
+cv2.destroyAllWindows()
