@@ -3,7 +3,6 @@ from kivy.uix.camera import Camera
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 import cv2
-import numpy as np
 import glob
 import math
 
@@ -60,21 +59,18 @@ class CameraApp(App):
         
         #button_for_capturing_image
         button1 = Button(text = "Capture!",size_hint= (.5, .2),pos_hint = {'x':.25, 'y':.25})
-        #button_obj.size_hint= (.5, .2)
-        #button_obj.pos_hint = {'x':.25, 'y':.25}
+       
         button1.bind(on_press = self.take_image)
 
 
         #button_for_scanning_qr_code
         button2 = Button(text = "QR code scan!",size_hint= (.5, .2),pos_hint = {'x':.25, 'y':.25})
-        #button_obj.size_hint= (.5, .2)
-        #button_obj.pos_hint = {'x':.25, 'y':.25}
+       
         button2.bind(on_press = self.QR_code)
 
         #button_for_applying_filter
         button3 = Button(text = "Apply filter!",size_hint= (.5, .2),pos_hint = {'x':.25, 'y':.25})
-        #button_obj.size_hint= (.5, .2)
-        #button_obj.pos_hint = {'x':.25, 'y':.25}
+        
         button3.bind(on_press = self.apply_filter)
 
 
@@ -92,20 +88,19 @@ class CameraApp(App):
         self.camera_obj.export_to_png("./selfie.png")
 
     def QR_code(self, *args):
-        #print("QR code is being detected!")
+        
         vid = cv2.VideoCapture(0)
         qrCodeDetector = cv2.QRCodeDetector()
         while True:
                 ret,frame=vid.read()
                 cv2.imshow('frame',frame)
                 decodedText, points, _ = qrCodeDetector.detectAndDecode(frame)
-                if points is not None:
-    # QR Code detected handling code
+                if points is not None:   
                         print(decodedText)
                 else:
                         print("QR code not detected")	
-                #if cv2.waitKey(1) & 0xFF==ord('q'):
-                        #break
+                if cv2.waitKey(1) & 0xFF==ord('q'):
+                        break
         vid.release()
 
     
@@ -116,11 +111,10 @@ class CameraApp(App):
         save_path = 'saved-media/filter.mp4'
         config=CFEVideoConf(cap,filepath=save_path,res='480p')
         while(True):
-            ret,frame=cap.read()
-            #cv2.imshow('Normal Camera',frame) 
-            cv2.imshow('Inverted Image',cv2.bitwise_not(frame))
-        '''if cv2.waitKey(20) & 0xFF == ord('q'):
-            break'''
+            ret,frame=cap.read()           
+            cv2.imshow('Inverted Color',cv2.bitwise_not(frame))
+            if cv2.waitKey(20) & 0xFF == ord('q'):
+                break
 
         cap.release()
 
